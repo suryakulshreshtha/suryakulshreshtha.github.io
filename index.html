@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Surya Kulshreshtha</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧪</text></svg>">
+<meta name="description" content="Surya Kulshreshtha — SDET / Test Automation Engineer. Python, Playwright, Pytest, CI/CD, QA architecture. New Delhi, India.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Light terminal (used when the viewer is in light mode) */
+  :root {
+    --bg: #eef2f6;
+    --text: #17212c;
+    --host: #00788a;
+    --path: #c1006e;
+    --name: #b85600;
+    --file: #c2005c;
+    --var: #2c7a00;
+    --heading: #5d6570;
+    --link: #00788a;
+    --dim: #6b7480;
+    --pass: #2c7a00;
+    --cursor: #17212c;
+    --focus: #c1006e;
+  }
+  /* Dark terminal — the original palette */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1926;
+      --text: #ffffff;
+      --host: #00bbcc;
+      --path: #ff0096;
+      --name: #ff9911;
+      --file: #ff0883;
+      --var: #83ff08;
+      --heading: #bcbbbb;
+      --link: #00bbcc;
+      --dim: #8391a1;
+      --pass: #83ff08;
+      --cursor: #ffffff;
+      --focus: #ff0096;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d1926;
+    --text: #ffffff;
+    --host: #00bbcc;
+    --path: #ff0096;
+    --name: #ff9911;
+    --file: #ff0883;
+    --var: #83ff08;
+    --heading: #bcbbbb;
+    --link: #00bbcc;
+    --dim: #8391a1;
+    --pass: #83ff08;
+    --cursor: #ffffff;
+    --focus: #ff0096;
+  }
+
+  :root {
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  *, *::before, *::after { box-sizing: inherit; }
+  html {
+    scroll-padding-top: env(safe-area-inset-top, 0px);
+    background: var(--bg);
+  }
+  body {
+    margin: 0;
+    min-height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .term {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: clamp(28px, 9vw, 100px) clamp(18px, 6vw, 100px) clamp(48px, 10vw, 120px);
+    overflow-wrap: anywhere;
+  }
+
+  .block { margin-top: 1rem; }
+  .block:first-child { margin-top: 0; }
+
+  .prompt .host { color: var(--host); }
+  .prompt .path { color: var(--path); }
+  .prompt .sign { color: var(--host); }
+  .prompt .cmd  { color: var(--text); }
+
+  .out { display: block; }
+  .strong { font-weight: 700; }
+  .c-name { color: var(--name); }
+  .c-file { color: var(--file); }
+  .c-pass { color: var(--pass); }
+  .c-dim  { color: var(--dim); }
+
+  .section { margin-top: 1rem; color: var(--heading); white-space: pre; }
+  .section + .rows { margin-top: .15rem; }
+
+  .rows { margin-top: 1rem; }
+  .row { color: var(--text); }
+
+  .vars {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: .6ch;
+  }
+  .vars .k { color: var(--var); min-width: 11ch; }
+  .vars .v { color: var(--text); }
+
+  .tag { color: var(--text); }
+  .row.tagged { display: grid; grid-template-columns: 7ch 1fr; }
+  .lang { color: var(--dim); }
+
+  a {
+    color: var(--link);
+    text-decoration: none;
+    border-radius: 2px;
+  }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  .cursor {
+    display: inline-block;
+    width: .6em;
+    height: 1.1em;
+    margin-left: 1px;
+    vertical-align: -0.18em;
+    background: var(--cursor);
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .hidden { display: none; }
+
+  .skip {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    padding: 10px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+    font: inherit;
+    font-size: 13px;
+    color: var(--dim);
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+  }
+  .skip:hover { color: var(--text); }
+  .skip:focus-visible { outline: 2px solid var(--focus); outline-offset: -4px; }
+
+  @media (max-width: 600px) {
+    body { font-size: 14.5px; }
+    .vars { grid-template-columns: 1fr; }
+    .vars .v { padding-left: 2ch; margin-bottom: .35rem; }
+    .vars .k { min-width: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cursor { animation: none; }
+  }
+</style>
+</head>
+<body>
+  <main class="term" id="term" aria-live="off"></main>
+  <button class="skip" id="skip" type="button">skip animation</button>
+
+<script>
+(function () {
+  var HOST = 'Callsign@Anti-Errorist';
+  var GH = 'https://github.com/suryakulshreshtha';
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function link(href, label) {
+    return '<a href="' + href + '" target="_blank" rel="noopener">' + esc(label) + '</a>';
+  }
+  function list(items) {
+    return '[' + items.map(function (i) { return "'" + esc(i) + "'"; }).join(', ') + ']';
+  }
+  function section(title) {
+    var bar = '='.repeat(Math.max(16, title.length));
+    return '<div class="section">' + bar + '\n' + esc(title) + '\n' + bar + '</div>';
+  }
+  function vars(pairs) {
+    return '<div class="rows vars">' + pairs.map(function (p) {
+      return '<span class="k">' + esc(p[0]) + '</span><span class="v">= ' + p[1] + '</span>';
+    }).join('') + '</div>';
+  }
+
+  var projects = [
+    ['py', 'ForkablePlaywrightSelfHealer', 'Playwright tests that repair their own locators from plain English, fully offline'],
+    ['py', 'ForkablePythonProjectShowcase', 'Playwright + Pytest framework: UI and API tests, POM, network mocking, Docker, CI'],
+    ['ts', 'ForkableInterviewToolkit', 'runnable QA/SDET interview prep backed by real Page Object Model projects'],
+    ['ts', 'ForkableTypescriptPostgreReactNodejsLearning', 'full-stack TypeScript, React, Node and Postgres playground with Playwright E2E'],
+    ['py', 'ForkablePythonLearningShowcase', 'Python fundamentals with runnable examples, on the way to test automation'],
+    ['py', 'Forkable04EyeLearningSandbox', 'a learning sandbox for testing forkers']
+  ];
+
+  // Each chunk of intro.txt is revealed one after another after `cat intro.txt`
+  var intro = [
+    section('ROOT VARIABLES'),
+    vars([
+      ['role', "'" + esc('SDET / Test Automation Engineer') + "'"],
+      ['interests', list(['Test Automation', 'QA Architecture', 'CI/CD', 'Self-healing Tests'])],
+      ['motto', "'" + esc('Reversing QA entropy locally. Turning QA into quality awesomeness.') + "'"]
+    ]),
+    section('TECH STACK'),
+    vars([
+      ['code', list(['Python', 'TypeScript', 'JavaScript', 'Node.js'])],
+      ['testing', list(['Playwright', 'Pytest', 'API & DB testing', 'Postman'])],
+      ['frameworks', list(['React', 'Next.js', 'React Native', 'Express', 'FastAPI', 'Tailwind'])],
+      ['infra', list(['Docker', 'GitHub Actions', 'Git', 'GitLab'])],
+      ['data', list(['MongoDB', 'MSSQL', 'PostgreSQL'])]
+    ]),
+    section('WORK EXPERIENCE'),
+    '<div class="rows">' +
+      '<div class="row tagged"><span class="tag">[now]</span><span>'  + link('https://www.protiviti.com', 'Protiviti') + '</span></div>' +
+      '<div class="row tagged"><span class="tag">[past]</span><span>'  + link('https://www.nicsi.com', 'National Informatics Centre Services Inc.') + '</span></div>' +
+    '</div>',
+    section('PROJECTS'),
+    '<div class="rows">' + projects.map(function (p) {
+      return '<div class="row tagged"><span class="tag lang">[' + p[0] + ']</span><span><span class="strong">' +
+        link(GH + '/' + p[1], p[1]) + '</span> <span class="c-dim">' + esc(p[2]) + '</span></span></div>';
+    }).join('') +
+    '<div class="row" style="margin-top:.35rem">[ ' + link(GH + '?tab=repositories', 'all repositories') + ' ]</div></div>',
+    section('BLOG'),
+    '<div class="rows">[ ' + link('https://www.suryakulshreshtha.in', 'suryakulshreshtha.in') + ' ]</div>',
+    section('CONTACT'),
+    '<div class="rows">[ ' + link(GH, 'github') + ' ] [ ' +
+      link('https://www.linkedin.com/in/suryakulshreshtha/', 'linkedin') + ' ] [ ' +
+      link('https://www.suryakulshreshtha.in', 'website') + ' ]</div>'
+  ];
+
+  var steps = [
+    { cmd: 'grep "root" /etc/group', out: '<span class="out c-name">surya kulshreshtha</span>' },
+    { cmd: 'uname -a', out: '<span class="out strong">sdet / test automation engineer — python, playwright, ci/cd and qa architecture. new delhi, india.</span>' },
+    { cmd: 'cd /home/surya/ && ls', out: '<span class="out c-file strong">intro.txt</span>' },
+    { cmd: 'cat intro.txt', out: intro },
+    { cmd: 'pytest tests/test_surya.py -q', out:
+        '<span class="out"><span class="c-pass">......</span> <span class="c-dim">[100%]</span></span>' +
+        '<span class="out c-pass strong">6 passed in 0.42s</span>' }
+  ];
+
+  var term = document.getElementById('term');
+  var skipBtn = document.getElementById('skip');
+  var done = false;
+  var timers = [];
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+
+  function promptLine(text) {
+    var d = document.createElement('div');
+    d.className = 'prompt';
+    d.innerHTML = '<span class="host">' + HOST + '</span>:<span class="path">~</span>' +
+      '<span class="sign">$</span> <span class="cmd"></span>';
+    d.querySelector('.cmd').textContent = text || '';
+    return d;
+  }
+
+  function cursor() {
+    var c = document.createElement('span');
+    c.className = 'cursor';
+    c.setAttribute('aria-hidden', 'true');
+    return c;
+  }
+
+  function appendOut(block, out) {
+    var chunks = Array.isArray(out) ? out : [out];
+    chunks.forEach(function (h) {
+      var w = document.createElement('div');
+      w.innerHTML = h;
+      while (w.firstChild) block.appendChild(w.firstChild);
+    });
+  }
+
+  function finalPrompt() {
+    var b = document.createElement('div');
+    b.className = 'block';
+    var p = promptLine('');
+    p.appendChild(cursor());
+    b.appendChild(p);
+    term.appendChild(b);
+    skipBtn.classList.add('hidden');
+  }
+
+  function renderAll() {
+    done = true;
+    timers.forEach(clearTimeout);
+    timers = [];
+    term.innerHTML = '';
+    steps.forEach(function (s) {
+      var b = document.createElement('div');
+      b.className = 'block';
+      b.appendChild(promptLine(s.cmd));
+      appendOut(b, s.out);
+      term.appendChild(b);
+    });
+    finalPrompt();
+  }
+
+  function run(i) {
+    if (done) return;
+    if (i >= steps.length) { done = true; finalPrompt(); return; }
+    var s = steps[i];
+    var b = document.createElement('div');
+    b.className = 'block';
+    var p = promptLine('');
+    var cmdEl = p.querySelector('.cmd');
+    var cur = cursor();
+    p.appendChild(cur);
+    b.appendChild(p);
+    term.appendChild(b);
+
+    var n = 0;
+    (function type() {
+      if (done) return;
+      if (n < s.cmd.length) {
+        cmdEl.textContent += s.cmd[n++];
+        later(type, 38 + Math.random() * 34);
+        return;
+      }
+      later(function () {
+        if (done) return;
+        cur.remove();
+        var chunks = Array.isArray(s.out) ? s.out : [s.out];
+        var k = 0;
+        (function reveal() {
+          if (done) return;
+          if (k < chunks.length) {
+            appendOut(b, chunks[k++]);
+            later(reveal, chunks.length > 1 ? 110 : 0);
+          } else {
+            later(function () { run(i + 1); }, 420);
+          }
+        })();
+      }, 260);
+    })();
+  }
+
+  function skip(e) {
+    if (done) return;
+    if (e && e.type === 'keydown' && (e.metaKey || e.ctrlKey || e.altKey || e.key === 'Tab')) return;
+    if (e && e.type === 'click' && e.target.closest && e.target.closest('a')) return;
+    renderAll();
+  }
+
+  skipBtn.addEventListener('click', function (e) { e.stopPropagation(); renderAll(); });
+  document.addEventListener('keydown', skip);
+  document.addEventListener('click', skip);
+
+  if (reduce) { renderAll(); }
+  else { later(function () { run(0); }, 450); }
+})();
+</script>
+</body>
+</html>
