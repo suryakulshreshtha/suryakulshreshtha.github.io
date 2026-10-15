@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!-- Source for og.png, the link-preview card. Edit, then run: python scripts/capture.py -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>og card</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; }
+  body {
+    width: 1200px; height: 630px; box-sizing: border-box;
+    padding: 64px 76px;
+    background: #0d1926; color: #fff;
+    font-family: 'Source Code Pro', monospace; font-size: 30px; line-height: 1.5;
+    display: flex; flex-direction: column;
+    border-top: 10px solid #00bbcc;
+  }
+  .dots { display: flex; gap: 12px; margin-bottom: 44px; }
+  .dots i { width: 16px; height: 16px; border-radius: 50%; background: #ff0096; }
+  .dots i:nth-child(2) { background: #ff9911; }
+  .dots i:nth-child(3) { background: #83ff08; }
+  .host { color: #00bbcc; } .path { color: #ff0096; }
+  .name { color: #ff9911; font-size: 76px; font-weight: 700; line-height: 1.1; margin: 10px 0 18px; }
+  .role { font-size: 36px; font-weight: 600; }
+  .stack { color: #8391a1; margin-top: 8px; }
+  .foot { margin-top: auto; display: flex; justify-content: space-between; align-items: baseline; }
+  .ok { color: #83ff08; font-weight: 600; }
+  .url { color: #8391a1; }
+  .cursor { display: inline-block; width: .6em; height: 1.05em; background: #fff; vertical-align: -0.18em; margin-left: 4px; }
+</style>
+</head>
+<body>
+  <div class="dots"><i></i><i></i><i></i></div>
+  <div><span class="host">Callsign@Anti-Errorist</span>:<span class="path">~</span><span class="host">$</span> whoami</div>
+  <div class="name">surya kulshreshtha</div>
+  <div class="role">PO-QA SDET / Test Automation Engineer</div>
+  <div class="stack">python · playwright · pytest · ci/cd · qa architecture</div>
+  <div class="foot">
+    <div><span class="host">$</span> pytest -q <span class="ok">✓ tested in CI</span><span class="cursor"></span></div>
+    <div class="url">suryakulshreshtha.github.io</div>
+  </div>
+</body>
+</html>

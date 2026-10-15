@@ -3,12 +3,57 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Surya Kulshreshtha</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧪</text></svg>">
+<title>Surya Kulshreshtha — PO-QA SDET / Test Automation Engineer</title>
 <meta name="description" content="Surya Kulshreshtha — PO-QA SDET / Test Automation Engineer. Python, Playwright, Pytest, CI/CD, QA architecture. New Delhi, India.">
+<link rel="canonical" href="https://suryakulshreshtha.github.io/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧪</text></svg>">
+<meta name="theme-color" content="#eef2f6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d1926" media="(prefers-color-scheme: dark)">
+
+<!-- Link previews (LinkedIn, Slack, WhatsApp, X, Discord) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Surya Kulshreshtha">
+<meta property="og:locale" content="en_IN">
+<meta property="og:url" content="https://suryakulshreshtha.github.io/">
+<meta property="og:title" content="Surya Kulshreshtha — PO-QA SDET / Test Automation Engineer">
+<meta property="og:description" content="Python, Playwright, Pytest, CI/CD and QA architecture. A terminal-style site with its own passing test suite.">
+<meta property="og:image" content="https://suryakulshreshtha.github.io/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Terminal card reading: surya kulshreshtha, PO-QA SDET / Test Automation Engineer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Surya Kulshreshtha — PO-QA SDET / Test Automation Engineer">
+<meta name="twitter:description" content="Python, Playwright, Pytest, CI/CD and QA architecture. A terminal-style site with its own passing test suite.">
+<meta name="twitter:image" content="https://suryakulshreshtha.github.io/og.png">
+<meta name="twitter:image:alt" content="Terminal card reading: surya kulshreshtha, PO-QA SDET / Test Automation Engineer">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Surya Kulshreshtha",
+  "jobTitle": "PO-QA SDET / Test Automation Engineer",
+  "url": "https://suryakulshreshtha.github.io/",
+  "image": "https://suryakulshreshtha.github.io/og.png",
+  "worksFor": { "@type": "Organization", "name": "Protiviti", "url": "https://www.protiviti.com" },
+  "address": { "@type": "PostalAddress", "addressLocality": "New Delhi", "addressCountry": "IN" },
+  "knowsAbout": ["Test Automation", "QA Architecture", "Playwright", "Python", "Pytest", "CI/CD"],
+  "sameAs": [
+    "https://github.com/suryakulshreshtha",
+    "https://www.linkedin.com/in/suryakulshreshtha/",
+    "https://www.suryakulshreshtha.in"
+  ]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Hide the terminal for a moment so the typing animation doesn't flash the full page first.
+     Without JavaScript this never runs, and everything below is simply shown. -->
+<script>document.documentElement.classList.add('js');</script>
 <style>
   /* Light terminal (used when the viewer is in light mode) */
   :root {
@@ -16,12 +61,12 @@
     --text: #17212c;
     --host: #00788a;
     --path: #c1006e;
-    --name: #b85600;
+    --name: #a54f00;
     --file: #c2005c;
     --var: #2c7a00;
     --heading: #5d6570;
     --link: #00788a;
-    --dim: #6b7480;
+    --dim: #5f6874;
     --pass: #2c7a00;
     --cursor: #17212c;
     --focus: #c1006e;
@@ -81,6 +126,9 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  /* Semantic tags (h1, h2, p, ul, dl) styled to look like plain terminal output */
+  h1, h2, p, ul, dl, dd { margin: 0; padding: 0; font: inherit; }
+  ul { list-style: none; }
 
   .term {
     max-width: 920px;
@@ -130,6 +178,8 @@
   a:hover { text-decoration: underline; text-underline-offset: 3px; }
   a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 
+  .badge { display: inline-block; height: 20px; vertical-align: -5px; }
+
   .cursor {
     display: inline-block;
     width: .6em;
@@ -141,7 +191,9 @@
   }
   @keyframes blink { 50% { opacity: 0; } }
 
-  .hidden { display: none; }
+  /* Animation states. Only JavaScript ever adds these classes. */
+  .js:not(.armed) .term { visibility: hidden; }
+  .pending { display: none !important; }
 
   .skip {
     position: fixed;
@@ -155,6 +207,7 @@
     border: 0;
     cursor: pointer;
   }
+  .skip[hidden] { display: none; }
   .skip:hover { color: var(--text); }
   .skip:focus-visible { outline: 2px solid var(--focus); outline-offset: -4px; }
 
@@ -171,181 +224,176 @@
 </style>
 </head>
 <body>
-  <main class="term" id="term" aria-live="off"></main>
-  <button class="skip" id="skip" type="button">skip animation</button>
+<!--
+  Everything the visitor reads is written out below as plain HTML, so search engines,
+  link previews and no-JavaScript browsers see the whole page. The script at the bottom
+  only replays it as a typing animation. Editing guide: docs/GUIDE.md
+-->
+<main class="term" id="term">
+
+  <div class="block">
+    <div class="prompt"><span class="host">Callsign@Anti-Errorist</span>:<span class="path">~</span><span class="sign">$</span> <span class="cmd">grep "root" /etc/group</span></div>
+    <h1 class="out c-name">surya kulshreshtha</h1>
+  </div>
+
+  <div class="block">
+    <div class="prompt"><span class="host">Callsign@Anti-Errorist</span>:<span class="path">~</span><span class="sign">$</span> <span class="cmd">uname -a</span></div>
+    <p class="out strong">PO-QA sdet / test automation engineer — python, playwright, ci/cd and qa architecture. new delhi, india.</p>
+  </div>
+
+  <div class="block">
+    <div class="prompt"><span class="host">Callsign@Anti-Errorist</span>:<span class="path">~</span><span class="sign">$</span> <span class="cmd">cd /home/surya/ &amp;&amp; ls</span></div>
+    <p class="out c-file strong">intro.txt</p>
+  </div>
+
+  <div class="block">
+    <div class="prompt"><span class="host">Callsign@Anti-Errorist</span>:<span class="path">~</span><span class="sign">$</span> <span class="cmd">cat intro.txt</span></div>
+
+    <h2 class="section"><span aria-hidden="true">================
+</span>ROOT VARIABLES<span aria-hidden="true">
+================</span></h2>
+    <dl class="rows vars">
+      <dt class="k">role</dt><dd class="v">= 'PO-QA SDET / Test Automation Engineer'</dd>
+      <dt class="k">interests</dt><dd class="v">= ['Test Automation', 'QA Architecture', 'CI/CD', 'Self-healing Tests']</dd>
+      <dt class="k">motto</dt><dd class="v">= 'Reversing QA entropy locally. Turning QA into quality awesomeness.'</dd>
+    </dl>
+
+    <h2 class="section"><span aria-hidden="true">================
+</span>TECH STACK<span aria-hidden="true">
+================</span></h2>
+    <dl class="rows vars">
+      <dt class="k">code</dt><dd class="v">= ['Python', 'TypeScript', 'JavaScript', 'Node.js']</dd>
+      <dt class="k">testing</dt><dd class="v">= ['Playwright', 'Pytest', 'API &amp; DB testing', 'Postman']</dd>
+      <dt class="k">frameworks</dt><dd class="v">= ['React', 'Next.js', 'React Native', 'Express', 'FastAPI', 'Tailwind']</dd>
+      <dt class="k">infra</dt><dd class="v">= ['Docker', 'GitHub Actions', 'Git', 'GitLab']</dd>
+      <dt class="k">data</dt><dd class="v">= ['MongoDB', 'MSSQL', 'PostgreSQL']</dd>
+    </dl>
+
+    <h2 class="section"><span aria-hidden="true">================
+</span>WORK EXPERIENCE<span aria-hidden="true">
+================</span></h2>
+    <ul class="rows">
+      <li class="row tagged"><span class="tag">[now]</span><span><a href="https://www.protiviti.com" target="_blank" rel="noopener">Protiviti</a></span></li>
+      <li class="row tagged"><span class="tag">[past]</span><span><a href="https://www.nicsi.com" target="_blank" rel="noopener">National Informatics Centre Services Inc.</a></span></li>
+    </ul>
+
+    <h2 class="section"><span aria-hidden="true">================
+</span>PROJECTS<span aria-hidden="true">
+================</span></h2>
+    <ul class="rows projects">
+      <li class="row tagged"><span class="tag lang">[py]</span><span><a class="strong" href="https://github.com/suryakulshreshtha/Forkable-DevOps-Complete-StarterPack-To-FullSend" target="_blank" rel="noopener">Forkable-DevOps-Complete-StarterPack-To-FullSend</a> <span class="c-dim">nine-phase DevOps path in Python: tests, CI/CD, Docker, Kubernetes, Terraform, SLOs</span></span></li>
+      <li class="row tagged"><span class="tag lang">[py]</span><span><a class="strong" href="https://github.com/suryakulshreshtha/Forkable-AI-Engineering-Starter-Pack-To-Full-Send" target="_blank" rel="noopener">Forkable-AI-Engineering-Starter-Pack-To-Full-Send</a> <span class="c-dim">From dot product to cited RAG in 28 zero-dependency Python drills.</span></span></li>
+      <li class="row tagged"><span class="tag lang">[py]</span><span><a class="strong" href="https://github.com/suryakulshreshtha/ForkablePlaywrightSelfHealer" target="_blank" rel="noopener">ForkablePlaywrightSelfHealer</a> <span class="c-dim">Playwright tests that repair their own locators from plain English, fully offline</span></span></li>
+      <li class="row tagged"><span class="tag lang">[py]</span><span><a class="strong" href="https://github.com/suryakulshreshtha/ForkablePythonProjectShowcase" target="_blank" rel="noopener">ForkablePythonProjectShowcase</a> <span class="c-dim">Playwright + Pytest framework: UI and API tests, POM, network mocking, Docker, CI</span></span></li>
+      <li class="row tagged"><span class="tag lang">[ts]</span><span><a class="strong" href="https://github.com/suryakulshreshtha/ForkableInterviewToolkit" target="_blank" rel="noopener">ForkableInterviewToolkit</a> <span class="c-dim">runnable QA/SDET interview prep backed by real Page Object Model projects</span></span></li>
+      <li class="row tagged"><span class="tag lang">[ts]</span><span><a class="strong" href="https://github.com/suryakulshreshtha/ForkableTypescriptPostgreReactNodejsLearning" target="_blank" rel="noopener">ForkableTypescriptPostgreReactNodejsLearning</a> <span class="c-dim">full-stack TypeScript, React, Node and Postgres playground with Playwright E2E</span></span></li>
+      <li class="row tagged"><span class="tag lang">[py]</span><span><a class="strong" href="https://github.com/suryakulshreshtha/ForkablePythonLearningShowcase" target="_blank" rel="noopener">ForkablePythonLearningShowcase</a> <span class="c-dim">Python fundamentals with runnable examples, on the way to test automation</span></span></li>
+      <li class="row tagged"><span class="tag lang">[py]</span><span><a class="strong" href="https://github.com/suryakulshreshtha/Forkable04EyeLearningSandbox" target="_blank" rel="noopener">Forkable04EyeLearningSandbox</a> <span class="c-dim">a learning sandbox for testing forkers</span></span></li>
+      <li class="row" style="margin-top:.35rem">[ <a href="https://github.com/suryakulshreshtha?tab=repositories" target="_blank" rel="noopener">all repositories</a> ]</li>
+    </ul>
+
+    <h2 class="section"><span aria-hidden="true">================
+</span>BLOG<span aria-hidden="true">
+================</span></h2>
+    <p class="rows">[ <a href="https://www.suryakulshreshtha.in" target="_blank" rel="noopener">suryakulshreshtha.in</a> ]</p>
+
+    <h2 class="section"><span aria-hidden="true">================
+</span>CONTACT<span aria-hidden="true">
+================</span></h2>
+    <p class="rows">[ <a href="https://github.com/suryakulshreshtha" target="_blank" rel="noopener">github</a> ] [ <a href="https://www.linkedin.com/in/suryakulshreshtha/" target="_blank" rel="noopener">linkedin</a> ] [ <a href="https://www.suryakulshreshtha.in" target="_blank" rel="noopener">website</a> ]</p>
+  </div>
+
+  <!-- The real test suite lives in tests/ and runs in GitHub Actions on every push.
+       tests/test_honesty.py fails the build if the count or dots below drift from the suite. -->
+  <div class="block" id="tests">
+    <div class="prompt"><span class="host">Callsign@Anti-Errorist</span>:<span class="path">~</span><span class="sign">$</span> <span class="cmd">pytest -q</span></div>
+    <p class="out"><span class="c-pass" id="test-dots">.............................</span> <span class="c-dim">[100%]</span></p>
+    <p class="out c-pass strong"><span id="test-count">29</span> passed</p>
+    <p class="out c-dim">ci: <a id="ci-link" href="https://github.com/suryakulshreshtha/suryakulshreshtha.github.io/actions/workflows/ci.yml" target="_blank" rel="noopener"><img class="badge" src="https://github.com/suryakulshreshtha/suryakulshreshtha.github.io/actions/workflows/ci.yml/badge.svg?branch=main" alt="Live CI status of this site's test suite" height="20"></a></p>
+  </div>
+
+  <div class="block" id="final">
+    <div class="prompt"><span class="host">Callsign@Anti-Errorist</span>:<span class="path">~</span><span class="sign">$</span> <span class="cmd"></span><span class="cursor" aria-hidden="true"></span></div>
+  </div>
+</main>
+<button class="skip" id="skip" type="button" hidden>skip animation</button>
 
 <script>
+/* Replays the static terminal above as a typing animation.
+   Reads everything from the HTML, so there is nothing to edit in here. */
 (function () {
-  var HOST = 'Callsign@Anti-Errorist';
-  var GH = 'https://github.com/suryakulshreshtha';
-
-  function esc(s) {
-    return String(s).replace(/[&<>"']/g, function (c) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-    });
-  }
-  function link(href, label) {
-    return '<a href="' + href + '" target="_blank" rel="noopener">' + esc(label) + '</a>';
-  }
-  function list(items) {
-    return '[' + items.map(function (i) { return "'" + esc(i) + "'"; }).join(', ') + ']';
-  }
-  function section(title) {
-    var bar = '='.repeat(Math.max(16, title.length));
-    return '<div class="section">' + bar + '\n' + esc(title) + '\n' + bar + '</div>';
-  }
-  function vars(pairs) {
-    return '<div class="rows vars">' + pairs.map(function (p) {
-      return '<span class="k">' + esc(p[0]) + '</span><span class="v">= ' + p[1] + '</span>';
-    }).join('') + '</div>';
-  }
-
-  var projects = [
-    ['py', 'Forkable-DevOps-Complete-StarterPack-To-FullSend', 'nine-phase DevOps path in Python: tests, CI/CD, Docker, Kubernetes, Terraform, SLOs'],
-    ['py', 'Forkable-AI-Engineering-Starter-Pack-To-Full-Send', 'From dot product to cited RAG in 28 zero-dependency Python drills.'],
-    ['py', 'ForkablePlaywrightSelfHealer', 'Playwright tests that repair their own locators from plain English, fully offline'],
-    ['py', 'ForkablePythonProjectShowcase', 'Playwright + Pytest framework: UI and API tests, POM, network mocking, Docker, CI'],
-    ['ts', 'ForkableInterviewToolkit', 'runnable QA/SDET interview prep backed by real Page Object Model projects'],
-    ['ts', 'ForkableTypescriptPostgreReactNodejsLearning', 'full-stack TypeScript, React, Node and Postgres playground with Playwright E2E'],
-    ['py', 'ForkablePythonLearningShowcase', 'Python fundamentals with runnable examples, on the way to test automation'],
-    ['py', 'Forkable04EyeLearningSandbox', 'a learning sandbox for testing forkers']
-  ];
-
-  // Each chunk of intro.txt is revealed one after another after `cat intro.txt`
-  var intro = [
-    section('ROOT VARIABLES'),
-    vars([
-      ['role', "'" + esc('PO-QA SDET / Test Automation Engineer') + "'"],
-      ['interests', list(['Test Automation', 'QA Architecture', 'CI/CD', 'Self-healing Tests'])],
-      ['motto', "'" + esc('Reversing QA entropy locally. Turning QA into quality awesomeness.') + "'"]
-    ]),
-    section('TECH STACK'),
-    vars([
-      ['code', list(['Python', 'TypeScript', 'JavaScript', 'Node.js'])],
-      ['testing', list(['Playwright', 'Pytest', 'API & DB testing', 'Postman'])],
-      ['frameworks', list(['React', 'Next.js', 'React Native', 'Express', 'FastAPI', 'Tailwind'])],
-      ['infra', list(['Docker', 'GitHub Actions', 'Git', 'GitLab'])],
-      ['data', list(['MongoDB', 'MSSQL', 'PostgreSQL'])]
-    ]),
-    section('WORK EXPERIENCE'),
-    '<div class="rows">' +
-      '<div class="row tagged"><span class="tag">[now]</span><span>'  + link('https://www.protiviti.com', 'Protiviti') + '</span></div>' +
-      '<div class="row tagged"><span class="tag">[past]</span><span>'  + link('https://www.nicsi.com', 'National Informatics Centre Services Inc.') + '</span></div>' +
-    '</div>',
-    section('PROJECTS'),
-    '<div class="rows">' + projects.map(function (p) {
-      return '<div class="row tagged"><span class="tag lang">[' + p[0] + ']</span><span><span class="strong">' +
-        link(GH + '/' + p[1], p[1]) + '</span> <span class="c-dim">' + esc(p[2]) + '</span></span></div>';
-    }).join('') +
-    '<div class="row" style="margin-top:.35rem">[ ' + link(GH + '?tab=repositories', 'all repositories') + ' ]</div></div>',
-    section('BLOG'),
-    '<div class="rows">[ ' + link('https://www.suryakulshreshtha.in', 'suryakulshreshtha.in') + ' ]</div>',
-    section('CONTACT'),
-    '<div class="rows">[ ' + link(GH, 'github') + ' ] [ ' +
-      link('https://www.linkedin.com/in/suryakulshreshtha/', 'linkedin') + ' ] [ ' +
-      link('https://www.suryakulshreshtha.in', 'website') + ' ]</div>'
-  ];
-
-  var steps = [
-    { cmd: 'grep "root" /etc/group', out: '<span class="out c-name">surya kulshreshtha</span>' },
-    { cmd: 'uname -a', out: '<span class="out strong">PO-QA sdet / test automation engineer — python, playwright, ci/cd and qa architecture. new delhi, india.</span>' },
-    { cmd: 'cd /home/surya/ && ls', out: '<span class="out c-file strong">intro.txt</span>' },
-    { cmd: 'cat intro.txt', out: intro },
-    { cmd: 'pytest tests/test_surya.py -q', out:
-        '<span class="out"><span class="c-pass">........</span> <span class="c-dim">[100%]</span></span>' +
-        '<span class="out c-pass strong">08 passed in 0.42s</span>' }   /* Change for number of projects static text at the end */
-        
-  ];
-
+  var root = document.documentElement;
   var term = document.getElementById('term');
   var skipBtn = document.getElementById('skip');
-  var done = false;
   var timers = [];
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var done = false;
+  var plan = [];
 
-  function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+  // If anything throws, show the finished page rather than leave it hidden or half-typed.
+  function bail() {
+    try { finish(); } catch (e) {
+      Array.prototype.forEach.call(document.querySelectorAll('.pending, .typing'), function (el) {
+        if (el.classList.contains('typing')) el.remove(); else el.classList.remove('pending');
+      });
+      skipBtn.hidden = true;
+      root.classList.add('armed', 'done');
+    }
+  }
 
-  function promptLine(text) {
-    var d = document.createElement('div');
-    d.className = 'prompt';
-    d.innerHTML = '<span class="host">' + HOST + '</span>:<span class="path">~</span>' +
-      '<span class="sign">$</span> <span class="cmd"></span>';
-    d.querySelector('.cmd').textContent = text || '';
-    return d;
+  function later(fn, ms) {
+    timers.push(setTimeout(function () {
+      try { fn(); } catch (e) { bail(); }
+    }, ms));
   }
 
   function cursor() {
     var c = document.createElement('span');
-    c.className = 'cursor';
+    c.className = 'cursor typing';
     c.setAttribute('aria-hidden', 'true');
     return c;
   }
 
-  function appendOut(block, out) {
-    var chunks = Array.isArray(out) ? out : [out];
-    chunks.forEach(function (h) {
-      var w = document.createElement('div');
-      w.innerHTML = h;
-      while (w.firstChild) block.appendChild(w.firstChild);
-    });
-  }
-
-  function finalPrompt() {
-    var b = document.createElement('div');
-    b.className = 'block';
-    var p = promptLine('');
-    p.appendChild(cursor());
-    b.appendChild(p);
-    term.appendChild(b);
-    skipBtn.classList.add('hidden');
-  }
-
-  function renderAll() {
+  function finish() {
+    if (done) return;
     done = true;
     timers.forEach(clearTimeout);
     timers = [];
-    term.innerHTML = '';
-    steps.forEach(function (s) {
-      var b = document.createElement('div');
-      b.className = 'block';
-      b.appendChild(promptLine(s.cmd));
-      appendOut(b, s.out);
-      term.appendChild(b);
+    Array.prototype.forEach.call(term.querySelectorAll('.typing'), function (c) { c.remove(); });
+    plan.forEach(function (p) {
+      if (p.cmdEl) p.cmdEl.textContent = p.cmd;
+      p.block.classList.remove('pending');
+      p.outs.forEach(function (el) { el.classList.remove('pending'); });
     });
-    finalPrompt();
+    skipBtn.hidden = true;
+    term.removeAttribute('aria-busy');
+    root.classList.add('armed', 'done');
   }
 
   function run(i) {
     if (done) return;
-    if (i >= steps.length) { done = true; finalPrompt(); return; }
-    var s = steps[i];
-    var b = document.createElement('div');
-    b.className = 'block';
-    var p = promptLine('');
-    var cmdEl = p.querySelector('.cmd');
+    var p = plan[i];
+    if (!p) return finish();
+    p.block.classList.remove('pending');
+    if (i === plan.length - 1) return finish();          // final empty prompt
     var cur = cursor();
-    p.appendChild(cur);
-    b.appendChild(p);
-    term.appendChild(b);
-
+    p.cmdEl.after(cur);
     var n = 0;
     (function type() {
       if (done) return;
-      if (n < s.cmd.length) {
-        cmdEl.textContent += s.cmd[n++];
+      if (n < p.cmd.length) {
+        p.cmdEl.textContent += p.cmd[n++];
         later(type, 38 + Math.random() * 34);
         return;
       }
       later(function () {
         if (done) return;
         cur.remove();
-        var chunks = Array.isArray(s.out) ? s.out : [s.out];
         var k = 0;
         (function reveal() {
           if (done) return;
-          if (k < chunks.length) {
-            appendOut(b, chunks[k++]);
-            later(reveal, chunks.length > 1 ? 110 : 0);
+          if (k < p.outs.length) {
+            p.outs[k++].classList.remove('pending');
+            later(reveal, p.outs.length > 1 ? 110 : 0);
           } else {
             later(function () { run(i + 1); }, 420);
           }
@@ -358,15 +406,38 @@
     if (done) return;
     if (e && e.type === 'keydown' && (e.metaKey || e.ctrlKey || e.altKey || e.key === 'Tab')) return;
     if (e && e.type === 'click' && e.target.closest && e.target.closest('a')) return;
-    renderAll();
+    finish();
   }
 
-  skipBtn.addEventListener('click', function (e) { e.stopPropagation(); renderAll(); });
-  document.addEventListener('keydown', skip);
-  document.addEventListener('click', skip);
+  try {
+    plan = Array.prototype.map.call(term.querySelectorAll('.block'), function (block) {
+      var cmdEl = block.querySelector('.prompt .cmd');
+      var outs = Array.prototype.filter.call(block.children, function (el) {
+        return !el.classList.contains('prompt');
+      });
+      return { block: block, cmdEl: cmdEl, cmd: cmdEl ? cmdEl.textContent : '', outs: outs };
+    });
 
-  if (reduce) { renderAll(); }
-  else { later(function () { run(0); }, 450); }
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var bot = /bot|crawl|spider|slurp|preview|facebookexternalhit|embedly/i.test(navigator.userAgent);
+    if (reduce || bot) return finish();
+
+    plan.forEach(function (p) {
+      p.block.classList.add('pending');
+      p.outs.forEach(function (el) { el.classList.add('pending'); });
+      if (p.cmdEl) p.cmdEl.textContent = '';
+    });
+    term.setAttribute('aria-busy', 'true');
+    skipBtn.hidden = false;
+    root.classList.add('armed');
+
+    skipBtn.addEventListener('click', function (e) { e.stopPropagation(); finish(); });
+    document.addEventListener('keydown', skip);
+    document.addEventListener('click', skip);
+    later(function () { run(0); }, 450);
+  } catch (err) {
+    bail();
+  }
 })();
 </script>
 </body>
